@@ -1,0 +1,69 @@
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/jetbrains-mono';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --background: 220 13% 11%;
+    --subtle: 220 13% 13.5%;
+    --foreground: 215 14% 82%;
+    --muted: 220 12% 17%;
+    --muted-foreground: 218 10% 60%;
+    --border: 220 12% 22%;
+    --primary: 210 62% 64%;
+    --primary-foreground: 220 14% 9%;
+    --primary-soft: 212 32% 19%;
+    --ring: 210 62% 64%;
+    --success: 142 38% 56%;
+    --warning: 38 62% 62%;
+    --danger: 4 62% 64%;
+    --danger-soft: 4 30% 18%;
+  }
+  * { @apply border-border; }
+  html, body, #root { height: 100%; }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+    font-size: 14px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  button, [role='button'], a { @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-background; }
+  ::selection { background: hsl(var(--primary) / 0.28); }
+  h1, h2, h3 { @apply font-mono; }
+}
+
+/* Thin neutral scrollbars */
+* { scrollbar-width: thin; scrollbar-color: hsl(220 12% 28%) transparent; }
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb { background: hsl(220 12% 26%); border-radius: 8px; border: 2px solid transparent; background-clip: content-box; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+
+/* ── Editor decorations ── */
+.dr-glyph-open, .dr-glyph-resolved {
+  margin-left: 4px; width: 10px !important; height: 10px !important; margin-top: 5px; border-radius: 2px; cursor: pointer;
+}
+.dr-glyph-open { background: hsl(var(--primary)); }
+.dr-glyph-resolved { background: hsl(220 9% 40%); }
+.dr-line-open { background: hsl(var(--primary) / 0.09); }
+.dr-line-resolved { background: hsl(220 14% 50% / 0.05); }
+.dr-line-flash { animation: dr-flash 1.4s ease-out; }
+@keyframes dr-flash { from { background: hsl(var(--primary) / 0.28); } to { background: transparent; } }
+.dr-error-line { background: hsl(var(--danger) / 0.1); }
+
+/* Remote cursors (y-monaco). Per-client colours are injected at runtime. */
+.yRemoteSelection { opacity: 0.22; }
+.yRemoteSelectionHead { position: absolute; border-left: 2px solid; height: 100%; box-sizing: border-box; }
+.yRemoteSelectionHead::after {
+  position: absolute; top: -18px; left: -2px; padding: 1px 5px; border-radius: 3px 3px 3px 0;
+  font: 500 10px/14px 'Inter Variable', system-ui, sans-serif; color: #fff; white-space: nowrap; pointer-events: none;
+}
+
+/* One quiet detail: a blinking block cursor after the hero line. */
+.cs-cursor { display: inline-block; width: .55em; height: 1.05em; margin-left: .15em; transform: translateY(.15em); background: hsl(var(--primary)); animation: cs-blink 1.2s steps(1) infinite; }
+@keyframes cs-blink { 50% { opacity: 0; } }
